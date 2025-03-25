@@ -67,7 +67,7 @@ matrix.airflow.dependencies = [
     { value = "typing_extensions<4.6", if = ["2.6"] },
     # HTTP Provider compatibility with different Airflow versions
     { value = "apache-airflow-providers-http~=3.0.0", if = ["2.2"] },
-    { value = "apache-airflow-providers-http~=4.5.2", if = ["2.3", "2.4"] },
+    { value = "apache-airflow-providers-http~=4.1.0", if = ["2.3", "2.4"] },
     { value = "apache-airflow-providers-http~=4.6.0", if = ["2.5", "2.6"] },
     { value = "apache-airflow-providers-http~=4.11.0", if = ["2.7"]},
     { value = "apache-airflow-providers-http~=4.13.0", if = ["2.8"] },
