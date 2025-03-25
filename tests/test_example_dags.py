@@ -34,6 +34,13 @@ MIN_VER_DAG_FILE_VER: dict[str, list[str]] = {
     "2.4": ["example_external_sensor_dag.py"],
 }
 
+# Add HTTP operator DAG to ignored files for providers-http versions without HttpOperator
+try:
+    from airflow.providers.http.operators.http import HttpOperator
+    HTTP_OPERATOR_AVAILABLE = True
+except ImportError:
+    HTTP_OPERATOR_AVAILABLE = False
+
 
 @provide_session
 def get_session(session=None):
@@ -81,6 +88,10 @@ def test_example_dag(session, dag_id: str):
     dag_bag = get_dag_bag()
     dag = dag_bag.get_dag(dag_id)
 
+    # Skip http_operator_example_dag in older Airflow versions without HttpOperator
+    if dag_id == "http_operator_example_dag" and not HTTP_OPERATOR_AVAILABLE:
+        pytest.skip(f"Skipping {dag_id} because HttpOperator is not available")
+    
     # Skip http_operator_example_dag in older Airflow versions 
     # since it has compatibility issues with our connection handling
     if dag_id == "http_operator_example_dag" and AIRFLOW_VERSION < Version("2.7.0"):

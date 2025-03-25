@@ -29,7 +29,18 @@ try:
 except ImportError:
     from airflow.operators.python_operator import BranchPythonOperator, PythonOperator
 
-from airflow.providers.http.operators.http import HttpOperator
+# http operator was renamed in providers-http 4.11.0
+try:
+    from airflow.providers.http.operators.http import HttpOperator
+    HTTP_OPERATOR_CLASS = HttpOperator
+except ImportError:
+    try:
+        from airflow.operators.http_operator import SimpleHttpOperator
+        HTTP_OPERATOR_CLASS = SimpleHttpOperator
+    except ImportError:
+        # Fall back to dynamically importing the operator
+        HTTP_OPERATOR_CLASS = None
+
 # http sensor was moved in 2.4
 try:
     from airflow.providers.http.sensors.http import HttpSensor
@@ -429,7 +440,7 @@ class DagBuilder:
                 )
 
             # HttpOperator
-            if issubclass(operator_obj, HttpOperator):
+            if HTTP_OPERATOR_CLASS and issubclass(operator_obj, HTTP_OPERATOR_CLASS):
                 headers = task_params.get("headers", {})
                 content_type = headers.get("Content-Type", "").lower()
 
