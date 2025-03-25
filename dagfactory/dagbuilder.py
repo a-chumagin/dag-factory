@@ -35,7 +35,7 @@ try:
     HTTP_OPERATOR_CLASS = HttpOperator
 except ImportError:
     try:
-        from airflow.operators.http_operator import SimpleHttpOperator
+        from airflow.providers.http.operators.http import SimpleHttpOperator
         HTTP_OPERATOR_CLASS = SimpleHttpOperator
     except ImportError:
         # Fall back to dynamically importing the operator

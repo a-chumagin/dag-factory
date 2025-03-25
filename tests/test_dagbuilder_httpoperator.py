@@ -23,9 +23,9 @@ try:
     HTTP_OPERATOR_PATH = "airflow.providers.http.operators.http.HttpOperator"
 except ImportError:
     try:
-        from airflow.operators.http_operator import SimpleHttpOperator
+        from airflow.providers.http.operators.http import SimpleHttpOperator
         HTTP_OPERATOR_CLASS = SimpleHttpOperator
-        HTTP_OPERATOR_PATH = "airflow.operators.http_operator.SimpleHttpOperator"
+        HTTP_OPERATOR_PATH = "airflow.providers.http.operators.http.SimpleHttpOperator"
     except ImportError:
         HTTP_OPERATOR_CLASS = None
         HTTP_OPERATOR_PATH = None
