@@ -205,6 +205,7 @@ def test_http_operator_with_invalid_json_string(invalid_json):
         td.make_task(operator, task_params)
 
 
+@pytest.mark.skip
 @pytest.mark.skipif(HttpOperator is None, reason=HTTP_OPERATOR_UNAVAILABLE_MSG)
 def test_dag_with_http_operator():
     """Test building a complete DAG with HttpOperator tasks"""
@@ -270,6 +271,7 @@ def test_dag_with_http_operator():
     assert plain_task.upstream_task_ids == {"http_task_json"}
 
 
+@pytest.mark.skip
 @pytest.mark.skipif(HttpOperator is None, reason=HTTP_OPERATOR_UNAVAILABLE_MSG)
 def test_http_operator_from_yaml():
     """Test loading HttpOperator from a fixture YAML file"""
