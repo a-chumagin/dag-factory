@@ -6,19 +6,11 @@ from pathlib import Path
 import pendulum
 import pytest
 from airflow import DAG
+from airflow.providers.http.operators.http import HttpOperator
 from airflow.utils.module_loading import import_string
 
 from dagfactory.dagbuilder import DagBuilder
 from dagfactory.exceptions import DagFactoryException
-
-# Try to import HttpOperator with fallbacks for different Airflow versions
-try:
-    from airflow.providers.http.operators.http import HttpOperator
-except ImportError:
-    try:
-        from airflow.operators.http_operator import SimpleHttpOperator as HttpOperator
-    except ImportError:
-        HttpOperator = None
 
 # Get current directory and project root
 here = Path(__file__).parent
