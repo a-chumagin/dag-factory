@@ -12,7 +12,7 @@ http_operator_example_dag:
   render_template_as_native_obj: True
   tasks:
     send_request_json:
-      operator: airflow.providers.http.operators.http.HttpOperator
+      operator: airflow.providers.http.operators.http.SimpleHttpOperator
       http_conn_id: "example_host"
       method: "POST"
       endpoint: "/run_test"
@@ -23,7 +23,7 @@ http_operator_example_dag:
         Content-Type: application/json
       log_response: True
     send_request_plain_text:
-      operator: airflow.providers.http.operators.http.HttpOperator
+      operator: airflow.providers.http.operators.http.SimpleHttpOperator
       http_conn_id: "example_host"
       method: "POST"
       endpoint: "/run_test"
