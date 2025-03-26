@@ -32,10 +32,12 @@ except ImportError:
 # http operator was renamed in providers-http 4.11.0
 try:
     from airflow.providers.http.operators.http import HttpOperator
+
     HTTP_OPERATOR_CLASS = HttpOperator
 except ImportError:
     try:
         from airflow.providers.http.operators.http import SimpleHttpOperator
+
         HTTP_OPERATOR_CLASS = SimpleHttpOperator
     except ImportError:
         # Fall back to dynamically importing the operator
