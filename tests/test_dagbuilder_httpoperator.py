@@ -162,7 +162,6 @@ def test_http_operator_with_invalid_json_string(invalid_json):
         td.make_task(HTTP_OPERATOR_PATH, task_params)
 
 
-@pytest.mark.skip
 @pytest.mark.skipif(HTTP_OPERATOR_CLASS is None, reason=HTTP_OPERATOR_UNAVAILABLE_MSG)
 def test_dag_with_http_operator():
     """Test building a complete DAG with HttpOperator tasks"""
@@ -172,7 +171,7 @@ def test_dag_with_http_operator():
         "schedule_interval": "0 0 * * *",
         "tasks": {
             "http_task_json": {
-                "operator": "airflow.providers.http.operators.http.HttpOperator",
+                "operator": HTTP_OPERATOR_PATH,
                 "http_conn_id": "test_conn",
                 "method": "POST",
                 "endpoint": "/api/test",
@@ -180,7 +179,7 @@ def test_dag_with_http_operator():
                 "data": {"message": "test data", "value": 123},
             },
             "http_task_plain": {
-                "operator": "airflow.providers.http.operators.http.HttpOperator",
+                "operator": HTTP_OPERATOR_PATH,
                 "http_conn_id": "test_conn",
                 "method": "POST",
                 "endpoint": "/api/test",
@@ -228,7 +227,6 @@ def test_dag_with_http_operator():
     assert plain_task.upstream_task_ids == {"http_task_json"}
 
 
-@pytest.mark.skip
 @pytest.mark.skipif(HTTP_OPERATOR_CLASS is None, reason=HTTP_OPERATOR_UNAVAILABLE_MSG)
 def test_http_operator_from_yaml():
     """Test loading HTTP operator from a fixture YAML file"""
